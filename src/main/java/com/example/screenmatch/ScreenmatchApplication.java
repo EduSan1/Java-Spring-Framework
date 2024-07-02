@@ -1,5 +1,7 @@
 package com.example.screenmatch;
 
+import com.example.screenmatch.model.EpisodeModel;
+import com.example.screenmatch.model.SeasonModel;
 import com.example.screenmatch.model.SeriesModel;
 import com.example.screenmatch.service.ApiService;
 import com.example.screenmatch.service.MapperService;
@@ -17,10 +19,20 @@ public class ScreenmatchApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		var apiService = new ApiService();
-		var data = apiService.getData("http://www.omdbapi.com/?i=tt3896198&apikey=44030e72&t=Chuck&y=2007&plot=full");
-
 		MapperService mapper = new MapperService();
-		SeriesModel series = mapper.getData(data, SeriesModel.class);
-		System.out.println(series);
+
+		var seriesJson = apiService.getData("http://www.omdbapi.com/?i=tt0934814&apikey=44030e72");
+		SeriesModel series = mapper.getData(seriesJson, SeriesModel.class);
+
+		System.out.println("Series \"" + series.title() + "\"");
+		for (int index = 1; index <= series.totalSeasons(); index++) {
+			var seasonJson = apiService.getData("http://www.omdbapi.com/?i=tt0934814&apikey=44030e72&season=" + index);
+			SeasonModel season = mapper.getData(seasonJson, SeasonModel.class);
+
+			System.out.println("---------- Season " + season.number() + " -----------");
+			season.episodes().forEach(episode -> {
+				System.out.println(episode.number() + " - " + episode.title());
+			});
+		}
 	}
 }
