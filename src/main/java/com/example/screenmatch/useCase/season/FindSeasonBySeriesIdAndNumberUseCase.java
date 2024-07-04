@@ -8,6 +8,7 @@ public class FindSeasonBySeriesIdAndNumberUseCase {
     private MapperService mapper = new MapperService();
 
     private final String ADDRESS = "http://www.omdbapi.com/?i=";
+
     private final String API_KEY = "&apikey=44030e72";
 
     public SeasonModel execute(String seriesId, Integer season) {

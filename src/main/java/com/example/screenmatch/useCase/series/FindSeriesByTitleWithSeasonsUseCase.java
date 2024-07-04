@@ -13,11 +13,13 @@ import java.util.Scanner;
 
 public class FindSeriesByTitleWithSeasonsUseCase {
     private Scanner scanner = new Scanner(System.in);
+
     private MapperService mapper = new MapperService();
+
     private FindSeasonBySeriesIdAndNumberUseCase findSeasonBySeriesIdAndNumberUseCase = new FindSeasonBySeriesIdAndNumberUseCase();
 
-
     private final String ADDRESS = "http://www.omdbapi.com/?T=";
+
     private final String API_KEY = "&apikey=44030e72";
 
     public SeriesModel execute() {
